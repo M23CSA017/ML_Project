@@ -84,12 +84,14 @@ transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5
 train_data = datasets.USPS(root='./data', train=True, download=True, transform=transforms.ToTensor())
 test_data = datasets.USPS(root='./data', train=False, download=True, transform=transforms.ToTensor())
 
-batch_size = 64
+batch_size = 32
 train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True)
 test_loader = DataLoader(test_data, batch_size=batch_size, shuffle=False)
 
 cnn_model = CNN()
-cnn_optimizer = optim.Adam(cnn_model.parameters(), lr=0.001)
+# cnn_optimizer = optim.Adam(cnn_model.parameters(), lr=0.01)
+cnn_optimizer = optim.SGD(cnn_model.parameters(), lr=0.001, momentum=0.9)
+
 criterion = nn.CrossEntropyLoss()
 
 epochs = 10
